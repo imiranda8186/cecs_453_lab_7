@@ -1,4 +1,6 @@
 //The data model for a note
+
+//Added changes to allow for a DateTime object that stores the date the Note was created. 
 class Note{
   final int? id;
   final String title;

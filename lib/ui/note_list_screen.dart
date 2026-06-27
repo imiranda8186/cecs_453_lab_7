@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:isaiah_miranda_lab_7_sql_singleton_repository_mvvm_getit/ui/add_note_screen.dart';
 import 'package:isaiah_miranda_lab_7_sql_singleton_repository_mvvm_getit/providers/note_provider.dart';
 
+
+//Mostly taken from the sample code, only minor changes like adding buttons and editing properties. 
 class NoteListScreen extends StatelessWidget {
   const NoteListScreen({super.key});
 
@@ -28,18 +30,34 @@ class NoteListScreen extends StatelessWidget {
                 final note = provider.notes[index];
                 return Card(
                   child: ListTile(
-                    title: Text(note.title),
+                    //Display ID, Title, Description, and Date it was created (or updated). 
+                    title: Text('${note.id} \n${note.title}'),
                     subtitle: Text('${note.description} \nCreated: ${note.createdAt}'),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () {
-                        Provider.of<NoteProvider>(context, listen:false).deleteNote(note.id!);
-                      }
-                    ),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => AddNoteScreen(note: note)
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      //The two buttons, one edits the selected note and the other deletes it.
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () {
+                            //Passes in the note to the next screen so that it knows that
+                            //The note is not null, so it becomes edit mode
+                            Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => AddNoteScreen(note: note)
                       ));
+                          }
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () {
+                            Provider.of<NoteProvider>(context, listen: false).deleteNote(note.id!);
+                          }
+                        )
+                      ]
+                    ),
+                    //Changed onTap to null so that tapping the list doesn't do anything, must tap one of the buttons. 
+                    onTap: () {
+                      null;
                     }
                   )
                 );

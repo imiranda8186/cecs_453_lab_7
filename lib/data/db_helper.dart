@@ -21,6 +21,7 @@ class DBHelper {
     return await openDatabase(path, version: 1, onCreate: _onCreate,);
   }
 
+  //Only had to change the code for this part to include the createdAt TEXT field
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, createdAt TEXT)');
   }
